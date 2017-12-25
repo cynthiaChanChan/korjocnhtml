@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="cmn" style="overflow-y: unset;">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- uc强制竖屏 -->
+	<meta name="screen-orientation" content="portrait">
+	<!-- QQ强制竖屏 -->
+	<meta name="x5-orientation" content="portrait">
+	<title>KORJO 带我去旅行+</title>
+	<meta name="description" content="KORJO，来自澳大利亚的旅行用品品牌。结合互联网基因，打造一个充满旅行情怀的生态圈，旨在为出行者提供舒适愉悦、安全便捷的旅行服务。">
+    <meta name="Keywords" content="旅行,旅游,自由行,出国,旅配,签证,护照,海关,安检,机场,航空,节假期,公众假期,百科全书">
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <link rel="bookmark" type="image/ico" href="favicon.ico"/>
+	<script type="text/javascript" src="js/files.js?v=1.1.4"></script>
+    <script>
+    // css
+    var cssFiles = [files.css['style'],files.css['mobileSelect']];
+    for (var i = 0, len = cssFiles.length; i < len; i++) {
+        document.write('<link type="text/css" rel="stylesheet" href="' + cssFiles[i] + '">');
+    }
+    // js
+    var jsFiles = [files.js['jquery'],files.js['sha1'],files.js['jweixin'],files.js['weixin'],files.js['store'],files.js['mobileSelect'],
+    files.js['common'],files.js['select']];
+    for (var i = 0, len = jsFiles.length; i < len; i++) {
+        document.write('<script type="text/javascript" src="' + jsFiles[i] + '"><\/script>');
+    }
+    </script>
+</head>
+<body style="overflow-y: unset;">
+<div class="wrap">
+	<div class="header">
+		<a href="destination.html">
+			<span id="rec">推荐&nbsp;&nbsp;&nbsp;</span>
+		</a>
+		<span id="des">|&nbsp;&nbsp;&nbsp;目的地</span>
+		<div class="arrow-up"></div>
+	</div>
+	<div class="select_wp">
+		<div class="select_hd">
+			<ul class="clearfix">
+				<li class="startPlace">
+					<div class="li-l">
+						<img src="images/map1.png" alt="" />
+					</div>
+					<div class="li-r">
+						<h2>出发地</h2>
+						<h3>国内</h3>
+					</div>
+				</li>
+				<li>
+					<div class="reverseDest">
+						<img src="images/i-plane_circle.png" alt="" />
+					</div>
+				</li>
+				<li class="endPlace">
+					<div class="li-l">
+						<img src="images/map2.png" alt="" />
+					</div>
+					<div class="li-r">
+						<h2>目的地</h2>
+						<h3>海外</h3>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="select_bd">
+			<!-- <div class="touristType">
+				<h3>您是</h3>
+				<div class="select" id="property">通用</div>
+			</div> -->
+			<div class="touristStep">
+				<h3>您的旅行阶段</h3>
+				<div class="select" id="travelStep">旅行前</div>
+			</div>
+		</div>
+		<div class="select_ft">
+			<div class="btn_next">进入相关问题</div>
+			<p>
+				为更准确的提供旅行相关问题，并用最短时间找到答案，
+				<br />
+				请您以上内容全部填写。
+			</p>
+		</div>
+	</div>
+	<div class="popup">
+		<div class="arrow-down">
+			<img src="images/arrow-down.png" alt="" />		
+		</div>
+		<div class="tip tip1">
+			<p>您也可以点击上方“推荐”，<br />浏览为您推荐的目的地。</p>
+		</div>
+		<div class="tip tip2">
+			<p>您填写内容后，<br />我们将记住您当前的行程，<br />改变目的地前无须再次填写。</p>
+			<div class="btn_sure">我知道了</div>
+		</div>
+	</div>
+</div>
+<div class="lightbox">
+	<img src="images/invalid.png" alt="invalid hint">
+</div>
+</body>
+</html>

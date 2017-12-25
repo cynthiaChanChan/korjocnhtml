@@ -1,0 +1,26 @@
+* { box-sizing: content-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; -ms-box-sizing: content-box; }
+a,img{display: inline-block;width: auto;}
+html {height: 100%; width: 100%;}
+body { height: 100%; width: 100%; background-image: url(../images/pc_bg.jpg); background-color: transparent; overflow: hidden; background-size: cover; background-position: left top; background-repeat:no-repeat; }
+body * { user-select: none; -webkit-user-select: none }
+.phone_panel { position: relative; left: 50%; margin-left: -161px; position: absolute; height: 641px !important; top: 50%; margin-top: -320px }
+.phoneBox { width: 322px; height: 641px !important; float: Left }
+.phoneBox .top { height: 48px; width: 100%; background-size: 100% 100%; background-image: url(../images/yulan_phone_top.png); background-repeat: no-repeat }
+.phoneBox .bottom { height: 45px; width: 100%; background-size: 100% 100%; background-image: url(../images/yulan_phone_bottom.png); background-repeat: no-repeat; text-align: center }
+/*.phoneBox .bottom a { width: 120px; height: 40px; background: url(../image/btn1_bg.png) no-repeat; display: inline-block; margin-top: 2px; color: #ccc; font-size: 14px; line-height: 40px; font-weight: 700 }
+*/.phoneBox .nr { padding-left: 1px; background-color: #fff; position: relative; cursor: pointer; height: 480px; overflow-x: hidden; overflow-y: hidden; }
+.phone_menubar { background: url(../images/phonetitle1.jpg); height: 20px }
+.scene_title_baner { display: block !important; height: 40px; line-height: 40px; background: #000; color: #fff; text-align: center; border-left: 1px solid #F6F6F6; border-right: 1px solid #F6F6F6 }
+.scene_title_baner .scene_title { min-width: 20px; font-size: 20px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap }
+/*.ui-page { position: relative !important; min-height: 0 !important }*/
+/*.anchorBL { display: none !important }*/
+/*#code #view_reg { font-size: 15px; border: 1px solid #fff; border-radius: 5px; height: 42px; line-height: 42px; text-align: center }
+#view_reg span { padding-left: 5px }
+#view_reg span a { border-bottom: 1px solid #08a1ef }*/
+
+
+/*分享*/
+#code { position: absolute; left: 400px; bottom: 20px; }
+#code h2 {font-size: 13px; margin: 10px 0; text-align: center;}
+#code #codeImg { display: block; margin-bottom: 10px; padding: 10px;}
+#codeImg img {display: block; width: 160px; height: auto;}

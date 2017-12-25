@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cmn">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>KORJO 带我去旅行+</title>
+    <meta name="description" content="KORJO，来自澳大利亚的旅行用品品牌。结合互联网基因，打造一个充满旅行情怀的生态圈，旨在为出行者提供舒适愉悦、安全便捷的旅行服务。">
+    <meta name="Keywords" content="旅行,旅游,自由行,出国,旅配,签证,护照,海关,安检,机场,航空,节假期,公众假期,百科全书">
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <link rel="bookmark" type="image/ico" href="favicon.ico"/>
+	<script>
+    if (!!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+    	location.href = 'index_m.html';
+    }
+	</script>
+	<script type="text/javascript" src="js/files.js?v=1.1.4"></script>
+	<script>
+	// css
+	var cssFiles = [files.css['index_pc']];
+	for(var i=0,len=cssFiles.length;i<len;i++){
+		document.write('<link type="text/css" rel="stylesheet" href="'+cssFiles[i]+'">');
+	}
+	</script>
+</head>
+<body>
+	<div class="phone_panel">
+		<div class="p-index main phoneBox" id="con" style="">
+			<div class="top"></div>
+			<div class="phone_menubar"></div>
+			<div class="scene_title_baner" style="display: none">
+				<div class="scene_title"></div>
+			</div>
+			<div class="nr" id="nr">
+				<iframe id="iframe" scrolling="no" frameborder="none" border="0" src="select.html" width="320" height="480"></iframe>
+			</div>
+			<div class="bottom"></div>
+		</div>
+		<div id="code">
+			<h2>扫一扫，查看手机版</h2>
+			<div id="codeImg" style="width: 160px; height: 160px;"><img src="images/qrcode.jpg"/></div>
+		</div>
+	</div>
+</body>
+</html>
