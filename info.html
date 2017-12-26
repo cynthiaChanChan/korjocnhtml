@@ -16,7 +16,7 @@
     <meta name="Keywords" content="旅行,旅游,自由行,出国,旅配,签证,护照,海关,安检,机场,航空,节假期,公众假期,百科全书">
     <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
     <link rel="bookmark" type="image/ico" href="favicon.ico"/>
-    <script type="text/javascript" src="js/files.js?v=1.1.5"></script>
+    <script type="text/javascript" src="js/files.js?v=1.1.7"></script>
     <script>
     // css
     var cssFiles = [files.css['period']];
@@ -25,7 +25,7 @@
     }
     // js
     var jsFiles = [files.js['jquery'],files.js['swiper'],files.js['sha1'],files.js['jweixin'],files.js['weixin'],files.js['store'],
-    files.js['common'],files.js['info']];
+    files.js['common'],files.js['units'],files.js['info']];
     for (var i = 0, len = jsFiles.length; i < len; i++) {
         document.write('<script type="text/javascript" src="' + jsFiles[i] + '"><\/script>');
     }
@@ -48,16 +48,7 @@
     <!--lightbox-->
     <div id="dark"></div>
     <div class="currencyConverter">
-        <div class="labels">
-            <div class="label active">人民币兑港币</div>
-            <div class="label">港币兑人民币</div>
-        </div>
-        <input id="inputMoney" type="number" placeholder="请输入港币金额"/>
-        <div class="result hide">
-            <p class="rate">*实时汇率：</p>
-            <p class="resultNum">港币2000可兑换人民币：<span>1800</span></p>
-        </div>
-        <div class="calculate">计算</div>
+      <div id="wrapper"></div>
     </div>
     <div class="infoContainer"></div>
   </body>

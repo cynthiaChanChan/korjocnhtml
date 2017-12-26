@@ -104,7 +104,7 @@ korjo.setPicker1 = function() {
 	    trigger: '.endPlace',
 	    title: '',
 	    wheels: [{data: data}],
-	    position:[chosenIndex,1], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+	    position:[chosenIndex,2], //初始化定位 打开时默认选中的哪个 如果不填默认为0
 	    transitionEnd:function(indexArr, data){
 
 	    },

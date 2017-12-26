@@ -26,6 +26,7 @@ var files = {
         city: 'js/city.js?v=' + version,
         info: 'js/info.js?v=' + version,
         swiper: 'js/swiper.jquery.min.js?v=' + version,
-        index_pc: 'css/index_pc.js?v=' + version
+        index_pc: 'js/index_pc.js?v=' + version,
+        units: 'js/units.js?v=' + version
     }
 }

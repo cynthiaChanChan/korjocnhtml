@@ -6,6 +6,34 @@ korjo.city = getParam("z");
 korjo.country = getParam("c");
 korjo.image = getParam("image");
 korjo.currency = getParam("currency");
+
+(function() {
+
+  function decimalAdjust(type, value, exp) {
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    if (value < 0) {
+      return -decimalAdjust(type, -value, exp);
+    }
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+  }
+  if (!Math.round10) {
+    Math.round10 = function(value, exp) {
+      return decimalAdjust('round', value, exp);
+    };
+  }
+
+})();
+
 korjo.getquery = function(parameters, callback) {
   $.ajax({
     url: 'http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID' + parameters,
@@ -64,6 +92,7 @@ korjo.gatherquery = function(geo) {
       $(".infoContainer").removeClass("loading");
       if (response.length > 0) {
         var html = "";
+        console.log(response);
         $.each(response,function(index, value) {
            var answerQueryPrameters = '?fqaid=' + value.id;
            var title = value.title.replace(/<\/?p>/g,"");
@@ -133,6 +162,62 @@ korjo.activateButton = function(target) {
   }
 }
 
+korjo.currencyRate = function(callback) {
+  if (store.get("currencyData") && store.get("currencyData").quotes) {
+    callback(store.get("currencyData"));
+  } else {
+    $.ajax({
+      url: 'http://www.apilayer.net/api/live?access_key=0091e32d33806dddad20dd17b82ed35f',
+      method: "GET",
+      dataType: "jsonp",
+      success: function(result) {
+        if (result.success) {
+          callback(result);
+          store.set("currencyData", result);
+        }
+      },
+      error: function(error) {
+        console.log("an error occured: " + error);
+      }
+    });
+  }
+}
+
+korjo.getCurrecyRate = function() {
+  korjo.currencyRate(function(res) {
+    var cny = res.quotes['USDCNY'];
+    var anotherCurrency = res.quotes['USD' + korjo.currency];
+    console.log(cny);
+    console.log(anotherCurrency);
+    korjo.cny = cny;
+    korjo.anotherCurrency = anotherCurrency;
+    units.forEach(function(unit) {
+       if (unit.indexOf(korjo.currency) == unit.length - 3) {
+          korjo.cUnit = unit.slice(0, -3);
+       }
+    })
+    console.log(korjo.cUnit);
+    korjo.currencyArray = ["人民币" ,korjo.cUnit];
+    var html = '<div class="labels"><div class="label active">人民币兑' + korjo.cUnit + '</div><div class="label">' + korjo.cUnit + '兑人民币</div></div>';
+    html += '<input id="inputMoney" type="number" placeholder=""/>';
+    $(".currencyConverter").prepend(html);
+    $(".currencyConverter").append('<div class="calculate">计算</div>');
+    korjo.rate = korjo.getCurrencyInfo(korjo.currencyArray[0], korjo.currencyArray[1]);
+  });
+}
+
+korjo.getCurrencyInfo = function(a, b) {
+  var rate = Math.round10(korjo.cny / korjo.anotherCurrency, -4);
+  if (a == '人民币') {
+    var rate = Math.round10(korjo.anotherCurrency / korjo.cny, -4);
+  }
+  var html = "";
+  html += '<div class="result hide"><p class="rate">*参考汇率：' + rate + '</p><div class="resultMoney"></div></div>';
+  $(".currencyConverter #wrapper").html(html);
+  $("#inputMoney").attr("placeholder", '请输入' + a + '金额');
+  return rate;
+}
+
 $(function() {
   $('.infoGroup').text(korjo.typeName);
   var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId + '&currency=' + korjo.currency;
@@ -141,9 +226,11 @@ $(function() {
   $('#statue03').attr('href', theUrl + '&p=3');
   $('#statue04').attr('href', theUrl + '&p=4');
   $(".infoContainer").addClass("loading");
-  korjo.checkIsMultipleAnswers(korjo.type, function(res) {
-    korjo.gatherquery(res);
-  })
+  //看是否需要区分目的地，1区分，2不区分，
+  // korjo.checkIsMultipleAnswers(korjo.type, function(res) {
+  //   korjo.gatherquery(res);
+  // })
+  korjo.gatherquery(1);
   korjo.getStatue(korjo.statue);
   korjo.clickNav();
   //for destination.js
@@ -157,23 +244,33 @@ $(function() {
          window.location = theUrl + "&p=" + korjo.statue;
       }
   });
-  //货币转换
-    $(".currencyConverter .label").click(function(e) {
-        $(this).addClass("active").siblings().removeClass("active");
-    })
-    $("#inputMoney").blur(function(e){
-        korjo.activateButton($(this));
-    });
-    $("#inputMoney").keyup(function(e){
-        korjo.activateButton($(this));
-    });
-    $(".calculate").click(function(e) {
-        if($(this).hasClass("active")) {
-            $(".result").removeClass("hide");
-        } else {
-            return;
-        }
-    });
+  //货币转换//类别是货币时
+  if (korjo.typeName.indexOf('货币') > -1) {
+    korjo.getCurrecyRate();
+  } else {
+    $('.currencyConverter').hide();
+  }
+  $(".currencyConverter .label").click(function(e) {
+      korjo.currencyArray.reverse();
+      korjo.rate = korjo.getCurrencyInfo(korjo.currencyArray[0], korjo.currencyArray[1]);
+      $(this).addClass("active").siblings().removeClass("active");
+      korjo.activateButton($("#inputMoney"));
+  })
+  $("#inputMoney").blur(function(e){
+      korjo.activateButton($(this));
+  });
+  $("#inputMoney").keyup(function(e){
+      korjo.activateButton($(this));
+  });
+  $(".calculate").click(function(e) {
+      if($(this).hasClass("active")) {
+          var value = Math.round10($("#inputMoney").val(), -2);
+          var result = Math.round10(value * korjo.rate, -2);
+          var html = '<p class="resultNum">' + korjo.currencyArray[0] + value + '可兑换' + korjo.currencyArray[1] + '：<span>' + result + '</span></p>';
+          $(".result .resultMoney").html(html);
+          $(".result").removeClass('hide');
+      }
+  });
 });
 
 //接口

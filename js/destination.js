@@ -50,7 +50,7 @@ korjo.gatherTheCity = function() {
          period = "旅行后";
          break;
      default:
-         period = "旅行前"; 
+         period = "旅行前";
      }
      //如没有操作select页面,默认旅游属性是通用的
      if (!propertyName) {
@@ -61,7 +61,7 @@ korjo.gatherTheCity = function() {
                     store.set('property', response[i].id);
                 }
             }
-        });  
+        });
      }
      var html = "";
      html += '<a href="info.html?' + queries + '"><div class="desCountry"><p id="desCity">' + keys['c'] + '-' + keys['z'] + '</p>';
@@ -91,7 +91,7 @@ korjo.gatherRecommends = function() {
       var html = "";
       $.each(response, function(index, value) {
         if(value.status == 1) {
-           html += '<a href="city.html?c='+value.geography+'&ci='+value.id+'"><li class="oneCountry" style="background-image: url('+imgUrl(value.image)+');"><div class="city_name">'+value.geography+'</div></li></a>';
+           html += '<a href="city.html?c='+value.geography+'&ci='+value.id+'&currency=' + value.currency + '"><li class="oneCountry" style="background-image: url('+imgUrl(value.image)+');"><div class="city_name">'+value.geography+'</div></li></a>';
         }
       });
       $('.countries').html(html);
