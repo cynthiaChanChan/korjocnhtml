@@ -5,6 +5,7 @@ korjo.parentid = getParam('parentid');
 korjo.city = getParam('z');
 korjo.cityId = getParam('zi');
 korjo.period = getParam('s');
+korjo.currency = getParam("currency");
 korjo.clickMenu = function() {
   $('.navigation').css('top', $('.header').height());
 	darkenDiv();
@@ -16,28 +17,28 @@ korjo.clickMenu = function() {
 	$('#dark').click(function() {
 		$('.navigation, #dark').fadeToggle(300);
 		$('body').toggleClass('overflow');
-	});	  
+	});
 };
 
 korjo.getFirstClass = function() {
   if (korjo.period === '1') {
     $('.infoGroup').text('旅行前-'+ korjo.city);
-    $('.navigation li:nth-of-type(1)>a').addClass('active');        
+    $('.navigation li:nth-of-type(1)>a').addClass('active');
   }
 
   if (korjo.period === '2') {
     $('.infoGroup').text('出发中-'+ korjo.city);
-    $('.navigation li:nth-of-type(2)>a').addClass('active');        
+    $('.navigation li:nth-of-type(2)>a').addClass('active');
   }
 
   if (korjo.period === '3') {
     $('.infoGroup').text('旅行中-'+ korjo.city);
-    $('.navigation li:nth-of-type(3)>a').addClass('active');        
+    $('.navigation li:nth-of-type(3)>a').addClass('active');
   }
 
   if (korjo.period === '4') {
     $('.infoGroup').text('旅行后-'+ korjo.city);
-    $('.navigation li:nth-of-type(4)>a').addClass('active');        
+    $('.navigation li:nth-of-type(4)>a').addClass('active');
   }
 }
 
@@ -87,14 +88,14 @@ korjo.getClasses = function(callback) {
 };
 
  korjo.gatherClasses = function() {
-    korjo.getClasses(function(response) {      
+    korjo.getClasses(function(response) {
       var html = "";
       $.each(response, function(index, value) {
          var id = value.id;
          var type = value.typename;
          var image = value.image;
-         var endUrl = encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&w='+encodeURIComponent(type) + 
-         '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=' + korjo.period +'&t=' + id+'&parentid=' + korjo.type;
+         var endUrl = encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&w='+encodeURIComponent(type) +
+         '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=' + korjo.period +'&t=' + id+'&parentid=' + korjo.type + '&currency=' + korjo.currency;
          var url = "";
          if (value.topimage) {
             url = 'type.html?c=' + endUrl;
@@ -102,14 +103,14 @@ korjo.getClasses = function(callback) {
             if (value.isone && value.isone != 0) {
               //如果只一个QA，直接去答案页
               url = 'detail.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+
-           '&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(value.typename)+'&s='+getParam("s")+'&t='+id+'&d='+value.isone+'&image='+encodeURIComponent(image);
+           '&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(value.typename)+'&s='+getParam("s")+'&t='+id+'&d='+value.isone+'&image='+encodeURIComponent(image) + '&currency=' + korjo.currency;
             } else {
               url = 'info.html?c=' + endUrl + '&image=' + encodeURIComponent(image);
             }
          }
-         html += '<li><img src="'+imgUrl(image)+'" alt=""><div class="box">';
-         html += '<div class="info"><a href="'+url+'">';
-         html += '<span>'+type+'</span></div></a></div></li>';
+         html += '<li><a href="'+url+'"><img src="'+imgUrl(image)+'" alt=""><div class="box">';
+         html += '<div class="info">';
+         html += '<span>'+type+'</span></div></div></a></li>';
       });
 
       $('ul','.hotel_bd').html(html);
@@ -117,7 +118,7 @@ korjo.getClasses = function(callback) {
  };
 $(function() {
   korjo.getFirstClass();
-  var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId;
+  var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId + '&currency=' + korjo.currency;;
   $('#statue01').attr('href', theUrl);
   $('#statue02').attr('href', theUrl + '&p=2');
   $('#statue03').attr('href', theUrl + '&p=3');

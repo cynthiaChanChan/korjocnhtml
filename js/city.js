@@ -1,6 +1,7 @@
 korjo.country = getParam('c');
 korjo.countryId = getParam('ci');
 korjo.statue = store.get('statue');
+korjo.currency = getParam('currency');
 korjo.getCities = function(callback) {
   $.ajax({
     url: "http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=" + korjo.countryId ,
@@ -35,7 +36,7 @@ korjo.gatherCities = function() {
        var remains = "";
      	 $.each(response, function(index,value) {
          var url = 'period.html?c='+encodeURIComponent(korjo.country)+"&ci="+korjo.countryId+'&p='+korjo.statue+'&z='+
-         encodeURIComponent(value.geography)+'&zi='+value.id;
+         encodeURIComponent(value.geography)+'&zi='+value.id + '&currency=' + korjo.currency;
          var list = '<li class="oneCity" style="background-image: url('+imgUrl(value.image)+');"><div>'+ value.geography + '</div></li></a>';
      	 	 if (index < 10) {
      	 		  html += '<a href="' + url +'">';
@@ -43,9 +44,9 @@ korjo.gatherCities = function() {
      	 	 } else {
             remains += '<a href="' + url +'">';
             remains += list;
-          
+
      	   }
-       }); 
+       });
        $('.cities').html(html);
        if(remains) {
           korjo.addLoadMore();

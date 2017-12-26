@@ -5,7 +5,7 @@ korjo.cityId = getParam("zi");
 korjo.city = getParam("z");
 korjo.country = getParam("c");
 korjo.image = getParam("image");
-
+korjo.currency = getParam("currency");
 korjo.getquery = function(parameters, callback) {
   $.ajax({
     url: 'http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID' + parameters,
@@ -71,10 +71,10 @@ korjo.gatherquery = function(geo) {
            var date = value.addtime.split('T')[0];
            var smallImg = value.shareimage || korjo.image;
            var detailUrl = 'detail.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+
-           '&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(korjo.typeName)+'&s='+getParam("s")+'&t='+korjo.type+'&d='+value.id+'&image='+encodeURIComponent(smallImg);
+           '&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(korjo.typeName)+'&s='+getParam("s")+'&t='+korjo.type+'&d='+value.id+'&image='+encodeURIComponent(smallImg) + '&currency=' + korjo.currency;
            if (korjo.statue === '3' || value.isgeography) {
               //只有旅途中直接需要目的地geographyid
-              //确定是否需要在答案页区分城市目的地，true区分 false不区分    
+              //确定是否需要在答案页区分城市目的地，true区分 false不区分
               answerQueryPrameters += "&geographyid=" + korjo.cityId;
               detailUrl += "&geography=true";
            }
@@ -84,7 +84,7 @@ korjo.gatherquery = function(geo) {
                     var fragment = document.createDocumentFragment();
                     digest = $(fragment).append(imgTagUrl(res[0].content)).text();
                  }
-              }); 
+              });
            }
            $(document).ajaxStop(function() {
               //如没答案则不显示
@@ -95,7 +95,7 @@ korjo.gatherquery = function(geo) {
                   html += '<ul class="note"><li class="infoDate">'+date+'&nbsp;|&nbsp;&nbsp;</li><li class="infoAuthor">'+value.username+'</li></ul></div>';
               }
            });
-          
+
         });
         $(document).ajaxStop(function() {
           $('.infoContainer').html(html);
@@ -105,7 +105,7 @@ korjo.gatherquery = function(geo) {
         });
       } else {
         window.location.href = comingUrl;
-      }      
+      }
     });
 }
 korjo.getStatue = function(statue) {
@@ -123,7 +123,7 @@ korjo.clickNav = function() {
   $('#dark').click(function() {
     $('.navigation, #dark').fadeToggle(300);
     $('body').toggleClass('overflow');
-  }); 
+  });
 };
 korjo.activateButton = function(target) {
   if (target.val()) {
@@ -135,15 +135,15 @@ korjo.activateButton = function(target) {
 
 $(function() {
   $('.infoGroup').text(korjo.typeName);
-  var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId;
+  var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId + '&currency=' + korjo.currency;
   $('#statue01').attr('href', theUrl);
   $('#statue02').attr('href', theUrl + '&p=2');
   $('#statue03').attr('href', theUrl + '&p=3');
-  $('#statue04').attr('href', theUrl + '&p=4');  
+  $('#statue04').attr('href', theUrl + '&p=4');
   $(".infoContainer").addClass("loading");
   korjo.checkIsMultipleAnswers(korjo.type, function(res) {
-    korjo.gatherquery(res); 
-  }) 
+    korjo.gatherquery(res);
+  })
   korjo.getStatue(korjo.statue);
   korjo.clickNav();
   //for destination.js

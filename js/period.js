@@ -1,6 +1,7 @@
 korjo.city = getParam('z');
 korjo.cityId = getParam('zi');
 korjo.country = getParam('c');
+korjo.currency = getParam('currency');
 var autoplay = 2500;
 korjo.subslideShow = function(page) {
     var swiper = new Swiper('.swiper-container', {
@@ -59,11 +60,11 @@ korjo.hideNotice = function() {
         var $this = $(this);
         $this.fadeOut(300);
         $this.closest('.container').siblings('.lightboxForNotice').fadeOut(300);
-    }); 
+    });
 };
 //重要提醒提示
 korjo.popHint = function() {
-    if(!store.get('watched')) { 
+    if(!store.get('watched')) {
 
         var height = $('.header').height();
         if (windowH > $('body').height()) {
@@ -78,9 +79,9 @@ korjo.popHint = function() {
         $('#hint').click(function() {
             $('.lightbox, #hint').fadeOut(300);
             if ($(".container li").hasClass("important")) {
-               $('.lightboxForNotice, .notice').fadeIn(300); 
-            }   
-        });      
+               $('.lightboxForNotice, .notice').fadeIn(300);
+            }
+        });
        store.set('watched', 'one');
        korjo.hideNotice();
     }
@@ -123,9 +124,9 @@ korjo.gatherType = function() {
             return;
           }
         }
-        if (type.length > 7) {type = type.substring(0,6);} 
-        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) + 
-        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=1&t=' + id+'&parentid=0';       
+        if (type.length > 7) {type = type.substring(0,6);}
+        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) +
+        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=1&t=' + id+'&parentid=0' + '&currency=' + korjo.currency;
         var url = '';
          if (value.topimage) {
             url = 'type.html?c=' + endUrl;
@@ -138,7 +139,7 @@ korjo.gatherType = function() {
         }else {
             html += '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
         }
-     });     
+     });
       $("#trip_status01").html(html);
       var pos = $('.notice','#trip_status01').closest('a').position();
       //如果'提醒'位于中间偏左，提示图片：
@@ -153,10 +154,10 @@ korjo.gatherType = function() {
      $.each(result, function(key,value) {
         var id = value.id;
         var type = value.typename;
-        var image = value.image;        
+        var image = value.image;
         if (type.length > 7) {type = type.substring(0,6);}
         var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) +
-         '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=2&t=' + id+'&parentid=0';
+         '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=2&t=' + id+'&parentid=0' + '&currency=' + korjo.currency;
         var url = '';
         if (value.topimage) {
           url = 'type.html?c=' + endUrl;
@@ -187,8 +188,8 @@ korjo.gatherType = function() {
         var type = value.typename;
         var image = value.image;
         if (type.length > 7) {type = type.substring(0,6);}
-        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) + 
-        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=3&t=' + id+'&parentid=0';
+        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) +
+        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=3&t=' + id+'&parentid=0' + '&currency=' + korjo.currency;
         var url = '';
         if (value.topimage) {
            url = 'type.html?c=' + endUrl;
@@ -208,8 +209,8 @@ korjo.getType(4, function(result) {
         var type = value.typename;
         var image = value.image;
         if (type.length > 7) {type = type.substring(0,6);}
-        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) + 
-        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=4&t=' + id+'&parentid=0';
+        var endUrl = encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&w='+encodeURIComponent(type) +
+        '&z=' + korjo.city + '&zi=' + korjo.cityId +'&s=4&t=' + id+'&parentid=0' + '&currency=' + korjo.currency;
        var url = '';
        if (value.topimage) {
           url = 'type.html?c=' + endUrl;
@@ -223,7 +224,7 @@ korjo.getType(4, function(result) {
             html += '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
         }
      });
-     
+
       $("#trip_status04").html(html);
       var pos = $('.notice','#trip_status04').closest('a').position();
       //如果'提醒'位于中间偏左，提示图片：
@@ -261,4 +262,3 @@ $(function() {
 // 接口
 // http://korjo.fans-me.com/KorjoApi/GetTypeListByTravelStatus?travel_status=2&parentid=0
 //http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=28
-
