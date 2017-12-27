@@ -102,18 +102,10 @@ korjo.getType = function(status, callback) {
   });
 };
 
-//如果没有答案就隐藏分类 1 / 0
-korjo.isNull = function(isnull) {
-  if (isnull === 1) {
-    return true;
-  }
-}
-
 korjo.gatherType = function() {
   korjo.getType(1, function(result) {
      var html ="";
      $.each(result, function(key,value) {
-        if (!korjo.isNull(value.isnull)) {
           var id = value.id;
           var type = value.typename;
           var image = value.image;
@@ -147,7 +139,6 @@ korjo.gatherType = function() {
           }else {
               html += '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
           }
-        }
      });
       $("#trip_status01").html(html);
       var pos = $('.notice','#trip_status01').closest('a').position();
@@ -161,8 +152,6 @@ korjo.gatherType = function() {
    korjo.getType(2, function(result) {
      var html ="";
      $.each(result, function(key,value) {
-       //如果没有答案就隐藏分类 1 / 0
-       if (!korjo.isNull(value.isnull)) {
           var id = value.id;
           var type = value.typename;
           var image = value.image;
@@ -182,7 +171,6 @@ korjo.gatherType = function() {
           }else {
               html += '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
           }
-        }
      });
       $("#trip_status02").html(html);
       var pos = $('.notice','#trip_status02').closest('a').position();
@@ -196,7 +184,6 @@ korjo.gatherType = function() {
   korjo.getType(3, function(result) {
      var html ="";
      $.each(result, function(key,value) {
-       if (!korjo.isNull(value.isnull)) {
           var id = value.id;
           var type = value.typename;
           var image = value.image;
@@ -210,7 +197,6 @@ korjo.gatherType = function() {
              url = 'info.html?c=' + endUrl + '&image=' + encodeURIComponent(image);
           }
           html +=  '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
-       }
      });
     $("#trip_status03").html(html);
   });
@@ -219,7 +205,6 @@ korjo.gatherType = function() {
 korjo.getType(4, function(result) {
      var html ="";
      $.each(result, function(key,value) {
-       if (!korjo.isNull(value.isnull)) {
           var id = value.id;
           var type = value.typename;
           var image = value.image;
@@ -238,7 +223,6 @@ korjo.getType(4, function(result) {
           }else {
               html += '<a href="'+url+'"><li class="subClass"><img class="typeImage" src="'+imgUrl(image)+'"><span>'+type+'</span></li></a>';
           }
-      }
     });
 
       $("#trip_status04").html(html);

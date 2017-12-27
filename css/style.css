@@ -87,6 +87,7 @@ li {
 }
 
 div.desCountry {
+	border-top: none;
 	position: relative;
 	margin-top: 0;
 	font-size: .5rem;
@@ -112,7 +113,24 @@ div.desCountry img {
 
 
 div.mapPointer {
+	line-height: 1;
 	margin-bottom: 0;
+	padding: .2rem .3rem;
+}
+
+.mapPointer img {
+	display: inline-block;
+	vertical-align: middle;
+	width: 1.2rem;
+	height: 1.2rem;
+	margin-right: 3px;
+}
+
+.mapPointer .mapPointerTitle {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: .65rem;
+	color: #5c5c5c;
 }
 
 .recommendation {

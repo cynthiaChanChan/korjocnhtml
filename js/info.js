@@ -65,6 +65,23 @@ korjo.checkIsMultipleAnswers = function(id, callback) {
   });
 }
 
+//旅游属性
+korjo.getPros = function(callback) {
+  $.ajax({
+    url: "http://korjo.fans-me.com/KorjoApi/GetPropertyList?parentid=0",
+    method: "GET",
+    dataType: "jsonp",
+    jsonp: "data",
+    success: function(result) {
+      callback(result);
+    },
+    error: function(error) {
+        console.log("an error occured: " + error);
+    }
+  });
+};
+
+
 korjo.getAnswer = function(answerQueryPrameters, callback) {
   $.ajax({
     url: 'http://korjo.fans-me.com/KorjoApi/GetFQAAnswerListByDFQAID' + answerQueryPrameters,
@@ -82,6 +99,16 @@ korjo.getAnswer = function(answerQueryPrameters, callback) {
 
 korjo.gatherquery = function(geo) {
   var comingUrl = 'coming.html?c='+korjo.country+'&z='+korjo.city+'&zi='+korjo.cityId;
+  //如没有操作select页面,默认旅游属性是通用的
+  if (!store.get('property')) {
+     korjo.getPros(function(response) {
+         for (var i = 0, max = response.length; i < max; i += 1) {
+             if (response[i].fullname.indexOf("通用") > -1 ) {
+                 store.set('property', response[i].id);
+             }
+         }
+     });
+  }
   var getQueryPrameters = '?typeid=' +  korjo.type +'&propertyid=' + store.get('property');
   if (korjo.statue === '3' || geo == 1) {
     //只有旅途中直接需要目的地geographyid
@@ -92,7 +119,6 @@ korjo.gatherquery = function(geo) {
       $(".infoContainer").removeClass("loading");
       if (response.length > 0) {
         var html = "";
-        console.log(response);
         $.each(response,function(index, value) {
            var answerQueryPrameters = '?fqaid=' + value.id;
            var title = value.title.replace(/<\/?p>/g,"");
@@ -108,23 +134,18 @@ korjo.gatherquery = function(geo) {
               detailUrl += "&geography=true";
            }
            if (!digest) {
-              korjo.getAnswer(answerQueryPrameters, function(res) {
-                 if (res.length) {
-                    var fragment = document.createDocumentFragment();
-                    digest = $(fragment).append(imgTagUrl(res[0].content)).text();
-                 }
-              });
+               if (value.content) {
+                  var fragment = document.createDocumentFragment();
+                  digest = $(fragment).append(imgTagUrl(value.content)).text();
+               }
            }
-           $(document).ajaxStop(function() {
-              //如没答案则不显示
-              if (digest) {
-                  html += '<div class="oneInfo"><div class="infoContent clear">'
-                  html += '<a href=' + detailUrl + '><h5>' + title + '</h5>';
-                  html += '<div><img class="infoImg" src="'+imgUrl(smallImg)+'"><span class="answer ellipsis">'+digest+'</span></div></a></div>';
-                  html += '<ul class="note"><li class="infoDate">'+date+'&nbsp;|&nbsp;&nbsp;</li><li class="infoAuthor">'+value.username+'</li></ul></div>';
-              }
-           });
-
+            //如没答案则不显示
+            if (digest) {
+                html += '<div class="oneInfo"><div class="infoContent clear">'
+                html += '<a href=' + detailUrl + '><h5>' + title + '</h5>';
+                html += '<div><img class="infoImg" src="'+imgUrl(smallImg)+'"><span class="answer ellipsis">'+digest+'</span></div></a></div>';
+                html += '<ul class="note"><li class="infoDate">'+date+'&nbsp;|&nbsp;&nbsp;</li><li class="infoAuthor">'+value.username+'</li></ul></div>';
+            }
         });
         $(document).ajaxStop(function() {
           $('.infoContainer').html(html);
@@ -187,8 +208,6 @@ korjo.getCurrecyRate = function() {
   korjo.currencyRate(function(res) {
     var cny = res.quotes['USDCNY'];
     var anotherCurrency = res.quotes['USD' + korjo.currency];
-    console.log(cny);
-    console.log(anotherCurrency);
     korjo.cny = cny;
     korjo.anotherCurrency = anotherCurrency;
     units.forEach(function(unit) {
@@ -196,7 +215,6 @@ korjo.getCurrecyRate = function() {
           korjo.cUnit = unit.slice(0, -3);
        }
     })
-    console.log(korjo.cUnit);
     korjo.currencyArray = ["人民币" ,korjo.cUnit];
     var html = '<div class="labels"><div class="label active">人民币兑' + korjo.cUnit + '</div><div class="label">' + korjo.cUnit + '兑人民币</div></div>';
     html += '<input id="inputMoney" type="number" placeholder=""/>';
@@ -227,10 +245,9 @@ $(function() {
   $('#statue04').attr('href', theUrl + '&p=4');
   $(".infoContainer").addClass("loading");
   //看是否需要区分目的地，1区分，2不区分，
-  // korjo.checkIsMultipleAnswers(korjo.type, function(res) {
-  //   korjo.gatherquery(res);
-  // })
-  korjo.gatherquery(1);
+  korjo.checkIsMultipleAnswers(korjo.type, function(res) {
+    korjo.gatherquery(res);
+  })
   korjo.getStatue(korjo.statue);
   korjo.clickNav();
   //for destination.js

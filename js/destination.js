@@ -27,13 +27,11 @@ korjo.getPros = function(callback) {
 korjo.gatherTheCity = function() {
      var queries = store.get('aLink');
      var propertyName = store.get('propertyName');
-     console.log(queries);
      var keys = {};
      queries.replace(/([^=&]+)=([^&]*)/g, function(full, key, value) {
         keys[key] = value;
         return "";
      });
-     console.log(keys);
      var period ="",
          statue = Number(keys['s']);
      switch(statue) {
@@ -64,7 +62,8 @@ korjo.gatherTheCity = function() {
         });
      }
      var html = "";
-     html += '<a href="info.html?' + queries + '"><div class="desCountry"><p id="desCity">' + keys['c'] + '-' + keys['z'] + '</p>';
+	 html += '<a href="info.html?' + queries + '"><div class="mapPointer"><img src="images/des_icon.png"><span class="mapPointerTitle">您当前目的地</span></div>';
+     html += '<div class="desCountry"><p id="desCity">' + keys['c'] + '-' + keys['z'] + '</p>';
      html += '<span id ="options">'+ (store.get('startGeo') || '国内') +'出发&nbsp;|&nbsp;'+propertyName+'&nbsp;|&nbsp;'+period+'-'+keys['w']+'</span>';
      html += '<img src="images/rec_arrow.png"></div></a>';
      $('#desCity_wrapper').html(html);

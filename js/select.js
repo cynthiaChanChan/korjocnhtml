@@ -3,13 +3,38 @@ $(function() {
 	initEvent();
 });
 
+korjo.getIP = function(callback) {
+	$.ajax({
+    url: "http://api.map.baidu.com/location/ip?ip=&ak=54HTqRT5AzWhub69FfOhGUrVaPiXX8qL&coor=bd09ll",
+    method: "GET",
+    dataType: "jsonp",
+    success: function(result) {
+      callback(result);
+    },
+    error: function(error) {
+        console.log("an error occured: " + error);
+    }
+  });
+};
+
 korjo.getChinaCities = function(callback) {
   $.ajax({
     url: "http://korjo.fans-me.com/KorjoApi/GetChinaCityList",
     method: "GET",
     dataType: "json",
     success: function(result) {
-      callback(result);
+			//定位城市手使用IP定位
+			korjo.getIP(function(res) {
+				if(res.content) {
+					var province = res.content.address_detail.province;
+					var city = res.content.address_detail.city;
+					result.location = {
+						province:province,
+						city: city
+					}
+				};
+				callback(result);
+			});
     },
     error: function(error) {
         console.log("an error occured: " + error);
@@ -51,10 +76,11 @@ korjo.setPicker = function() {
    korjo.getChinaCities(function(response) {
       var data = [];
       var id = 0;
-      var chosenIndex = 0
+      var chosenIndex = 0;
+			var cityIndex = 0;
       $.each(response, function(index,value) {
-      	//默认显示广东省
-        if (value.geography == "广东省") {
+      	//默认显示ip定位省份
+        if (response.location && value.geography == response.location.province) {
             chosenIndex = index;
         }
       	id += 1;
@@ -64,11 +90,16 @@ korjo.setPicker = function() {
             TreeList: value.TreeList
         };
       });
+			$.each (data[chosenIndex].TreeList, function(index, value) {
+				if (response.location && response.location.city.indexOf(value.geography) > -1) {
+						cityIndex = index;
+				}
+			});
       var mobileSelect1 = new MobileSelect({
 	    trigger: '.startPlace',
 	    title: '',
 	    wheels: [{data: data}],
-	    position: [chosenIndex,1], //初始化定位 打开时默认选中的哪个 如果不填默认为0
+	    position: [chosenIndex,cityIndex], //初始化定位 打开时默认选中的哪个 如果不填默认为0
 	    transitionEnd:function(indexArr, data){
 
 	    },

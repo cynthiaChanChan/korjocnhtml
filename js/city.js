@@ -1,6 +1,6 @@
 korjo.country = getParam('c');
 korjo.countryId = getParam('ci');
-korjo.statue = store.get('statue');
+korjo.statue = getParam('p');
 korjo.currency = getParam('currency');
 korjo.getCities = function(callback) {
   $.ajax({
