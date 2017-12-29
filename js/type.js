@@ -117,6 +117,7 @@ korjo.getClasses = function(callback) {
     });
  };
 $(function() {
+  $("#wx-desc").val("移动的随身攻略，带上我，带上钱包，你将轻松走遍世界的每一角落！");
   korjo.getFirstClass();
   var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId + '&currency=' + korjo.currency;;
   $('#statue01').attr('href', theUrl);

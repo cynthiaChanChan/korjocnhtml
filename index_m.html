@@ -16,12 +16,20 @@
     <meta name="Keywords" content="旅行,旅游,自由行,出国,旅配,签证,护照,海关,安检,机场,航空,节假期,公众假期,百科全书">
     <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
     <link rel="bookmark" type="image/ico" href="favicon.ico"/>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/swiper.min.css" rel="stylesheet">
-    <script src="js/jquery-2.1.4.js"></script>
-    <script src="js/swiper.jquery.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/index.js"></script>
+    <script type="text/javascript" src="js/files.js?v=1.1.7"></script>
+    <script>
+    // css
+    var cssFiles = [files.css['style'],files.css['swiper']];
+    for (var i = 0, len = cssFiles.length; i < len; i++) {
+        document.write('<link type="text/css" rel="stylesheet" href="' + cssFiles[i] + '">');
+    }
+    // js
+    var jsFiles = [files.js['jquery'],files.js['swiper'],files.js['sha1'],files.js['jweixin'],files.js['weixin'],files.js['store'],
+    files.js['common'],files.js['index']];
+    for (var i = 0, len = jsFiles.length; i < len; i++) {
+        document.write('<script type="text/javascript" src="' + jsFiles[i] + '"><\/script>');
+    }
+    </script>
   </head>
   <body id="indexPage">
   </body>

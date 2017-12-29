@@ -1,11 +1,12 @@
-var version = '1.1.7';
+var version = '1.1.8';
 var files = {
     css: {
         style: 'css/style.css?v=' + version,
         period: 'css/period.css?v=' + version,
         mobileSelect: 'css/mobileSelect.css?v=' + version,
         swiper: 'css/swiper.min.css?v=' + version,
-        index_pc: 'css/index_pc.css?v=' + version
+        index_pc: 'css/index_pc.css?v=' + version,
+        lightbox: 'css/lightbox.min?v=' + version
     },
     js: {
         jquery: 'js/jquery-2.1.4.js?v=' + version,
@@ -27,6 +28,7 @@ var files = {
         info: 'js/info.js?v=' + version,
         swiper: 'js/swiper.jquery.min.js?v=' + version,
         index_pc: 'js/index_pc.js?v=' + version,
-        units: 'js/units.js?v=' + version
+        units: 'js/units.js?v=' + version,
+        lightbox: 'js/lightbox.min.js?v=' + version
     }
 }

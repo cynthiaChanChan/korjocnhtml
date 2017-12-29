@@ -43,7 +43,7 @@ function imgUrl(url) {
 
 function imgTagUrl(str) {
     // console.log(str);
-    return str.replace(/<img.*?src="\//gi, '<img src="http://korjo.fans-me.com/').replace(/<li><p>(.*?)<\/p><\/li>/gi, '<li>$1<\/li>');
+    return str.replace(/<img.*?src="\//gi, '<img src="http://korjo.fans-me.com/').replace(/<li><p>(.*?)<\/p><\/li>/gi, '<li>$1<\/li>').replace(/<video.*?src="\//gi, '<video controls src="http://korjo.fans-me.com/').replace(/<source.*?<\/video>/, "</video>");    
 }
 
 // 判断是否微信
@@ -83,4 +83,3 @@ function darkenDiv() {
 $(function() {
     auto_rem();
 });
- 

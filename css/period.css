@@ -182,10 +182,6 @@ li.important {
 	left: 75%;
 }
 
-.navContainer.swiper-container {
-    position: static;
-}
-
 .navContainer .swiper-pagination .swiper-pagination-bullet {
 	opacity: 1;
 	width: .4rem;
@@ -202,7 +198,7 @@ li.important {
 }
 
 div.swiper-container-horizontal>.swiper-pagination-bullets {
-	top: 3.5rem;
+	top: 1.6rem;
 	z-index: 0;
 }
 
@@ -514,7 +510,7 @@ div.infoContent .visible {
 .coming {
 	margin-top: 40%;
 	text-align: center;
-	font-size: .8rem;
+	font-size: .7rem;
 }
 
 
@@ -642,7 +638,7 @@ div.infoContent .visible {
 	list-style-position: inside;
 }
 
-.detailContainer img {
+.detailContainer img, .detailContainer video{
 	max-width: 100%;
 	height: auto;
 	display: block;

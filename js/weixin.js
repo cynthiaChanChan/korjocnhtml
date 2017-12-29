@@ -66,7 +66,7 @@ wx.error(function(res) {
 
 $(document).ready(function() {
     var wxparam = '<input type="hidden" name="title" id="wx-title" value="Korjo，带我去旅行"/>';
-    wxparam += '<input type="hidden" name="desc" id="wx-desc" value="Korjo，带我去旅行" />';
+    wxparam += '<input type="hidden" name="desc" id="wx-desc" value="KORJO，来自澳大利亚的旅行用品品牌。结合互联网基因，打造一个充满旅行情怀的生态圈，旨在为出行者提供舒适愉悦、安全便捷的旅行服务。" />';
     wxparam += '<input type="hidden" name="img" id="wx-img" value="http://www.korjo.cn/images/logo_social.jpg" />';
     wxparam += '<input type="hidden" name="link" id="wx-link" value="'+location.href+'" />';
     $("body").append(wxparam);

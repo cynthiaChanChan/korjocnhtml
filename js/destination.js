@@ -68,7 +68,28 @@ korjo.gatherTheCity = function() {
      html += '<img src="images/rec_arrow.png"></div></a>';
      $('#desCity_wrapper').html(html);
 }
-
+//海报
+korjo.getSwipers = function() {
+	// <div class="swiper-slide citiesSlides">
+	// 	<img src="images/swiper01.jpg">
+	// </div>
+	$.ajax({
+		url: "https://korjo.fans-me.com/KorjoApi/GetPosterImageList",
+		method: "GET",
+		dataType: "json",
+		success: function(result) {
+			var html = '';
+			$.each(result, function(idx, value) {
+				html += '<div class="swiper-slide citiesSlides"><img src="' +  imgUrl(value.poster_image) + '"></div>';
+			});
+			$(".swiper-wrapper").html(html);
+			korjo.slideShowTwo();
+		},
+		error: function(error) {
+				console.log("an error occured: " + error);
+		}
+ });
+}
 
 korjo.getRecommends = function(callback) {
     $.ajax({
@@ -97,8 +118,11 @@ korjo.gatherRecommends = function() {
    });
 }
 
+
+
 $(function() {
-	korjo.slideShowTwo();
+	korjo.getSwipers();
+	$("#wx-desc").val("根据季节月份为你推荐适宜的旅游国家城市，跟随季节的变换感受不同的国家城市魅力。");
     korjo.gatherRecommends();
     var date = new Date();
     $('.month').text(date.getMonth() + 1 + '月');

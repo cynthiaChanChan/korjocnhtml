@@ -5,6 +5,7 @@ korjo.typeName = getParam("w");
 korjo.answer = getParam("d");
 korjo.period = getParam("s");
 korjo.country = getParam('c');
+korjo.currency = getParam('currency');
 korjo.getTitle = function() {
   //只有旅途中需要传目的地geographyid
   var query = "";
@@ -50,8 +51,8 @@ korjo.getPeriod = function() {
          elem.text('旅行后');
          break;
      default:
-         elem.text('旅行后'); 
-     }	
+         elem.text('旅行后');
+     }
 };
 
 korjo.getAnswer = function(answerQuery) {
@@ -66,16 +67,16 @@ korjo.getAnswer = function(answerQuery) {
       var content ="";
       var url = "info.html?c="+encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+"&w="+encodeURIComponent(korjo.typeName)+"&z="+
       encodeURIComponent(korjo.city)+"&zi="+korjo.cityId+"&t="+korjo.type+"&s="+
-      korjo.period+"&image="+encodeURIComponent(getParam("image"));
+      korjo.period+"&image="+encodeURIComponent(getParam("image")) + '&currency=' + korjo.currency;
       $.each(result, function(index,value) {
         var content = value.content;
         var fragment = document.createDocumentFragment();
         var text = $(fragment).append(imgTagUrl(content)).text();
         var textNoSpace = text.replace(/\s/g, "");
       	var date = value.addtime.split('T')[0];
-        html += '<ul class="note"><li class="subGroup"><a id="period"', 
+        html += '<ul class="note"><li class="subGroup"><a id="period"',
         html += 'href="period.html?c='+encodeURIComponent(korjo.country)+"&ci="+getParam("ci")+'&p='+korjo.period+'&z='+encodeURIComponent(korjo.city)+
-        '&zi='+encodeURIComponent(korjo.cityId)+'">';
+        '&zi='+encodeURIComponent(korjo.cityId)+ '&currency=' + korjo.currency+'">';
         html += '</a>&nbsp;&gt;&nbsp;<a id="info_title02" href="'+url+'"></a>&nbsp;</li>';
         html += '<li class="infoDate">'+date+'&nbsp;|&nbsp;</li>';
         html += '<li class="infoAuthor">'+value.username+'&nbsp;|&nbsp;</li>';
@@ -84,6 +85,9 @@ korjo.getAnswer = function(answerQuery) {
         html += '<div class="detailContainer">'+imgTagUrl(content)+'</div>';
       });
       $("#detailWrapper").append(html);
+      $(".detailContainer img").wrap(function() {
+        return '<a href="' + $(this).attr("src") + '" data-lightbox=' + $(this).attr("title") + '></a>';
+      });
       $(".infoGroup").text(korjo.typeName);
       $('#info_title02').text(korjo.typeName);
       $("#info_title").attr("href", url);
@@ -144,6 +148,11 @@ function wechatShare() {
 }
 
 $(function() {
+  //lightbox.js
+  lightbox.option({
+      showImageNumberLabel: false,
+      disableScrolling: true
+  })
   $("#detailWrapper").addClass("loading");
   korjo.getTitle();
   var answerQuery = "fqaid=" + korjo.answer;
@@ -180,9 +189,8 @@ $(function() {
 	    //whatsapp
 	  	$("#whatsapp").attr("href","whatsapp://send?text="+detailTitle+'-Korjo，带我去旅行 '+ link);
 	  	//微信分享
-	  	// 设置微信分享默认值
-		$("#wx-title").val(description);
-		$("#wx-desc").val('Korjo，带我去旅行');
+		$("#wx-title").val('Korjo，带我去旅行');
+		$("#wx-desc").val(description);
 		$("#wx-link").val(location.href);
 		$("#wx-img").val('http://www.korjo.cn/images/logo_social.jpg');
 	  	wechatShare();
@@ -202,7 +210,7 @@ $(function() {
 	  	var weilink = 'http://service.weibo.com/share/share.php?title=Korjo，带我去旅行:'+ detailTitle + '&url=' + link +'&source=bookmark&appkey=2992571369&pic='+imgLink+'&ralateUid=#_loginLayer_1490243723258';
 	  	$('#weibo').attr('href', weilink);
 	});
-	
+
 });
 
 //接口

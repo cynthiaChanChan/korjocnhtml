@@ -98,7 +98,7 @@ korjo.getAnswer = function(answerQueryPrameters, callback) {
 };
 
 korjo.gatherquery = function(geo) {
-  var comingUrl = 'coming.html?c='+korjo.country+'&z='+korjo.city+'&zi='+korjo.cityId;
+  var comingUrl = 'coming.html?c='+korjo.country+'&z='+korjo.city+'&zi='+korjo.cityId + '&p=' + korjo.statue + '&w=' + korjo.typeName;
   //如没有操作select页面,默认旅游属性是通用的
   if (!store.get('property')) {
      korjo.getPros(function(response) {
@@ -125,8 +125,9 @@ korjo.gatherquery = function(geo) {
            var digest = value.digest.replace(/<\/?p>/g,"");
            var date = value.addtime.split('T')[0];
            var smallImg = value.shareimage || korjo.image;
-           var detailUrl = 'detail.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+
-           '&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(korjo.typeName)+'&s='+getParam("s")+'&t='+korjo.type+'&d='+value.id+'&image='+encodeURIComponent(smallImg) + '&currency=' + korjo.currency;
+           var detailUrl = 'detail.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci");
+           detailUrl += '&z=' + encodeURIComponent(korjo.city)+'&zi='+korjo.cityId+'&w='+encodeURIComponent(korjo.typeName);
+           detailUrl += '&t='+korjo.type+'&d='+value.id+'&image='+encodeURIComponent(smallImg) + '&currency=' + korjo.currency + '&s=' + korjo.statue;
            if (korjo.statue === '3' || value.isgeography) {
               //只有旅途中直接需要目的地geographyid
               //确定是否需要在答案页区分城市目的地，true区分 false不区分
@@ -237,6 +238,7 @@ korjo.getCurrencyInfo = function(a, b) {
 }
 
 $(function() {
+  $("#wx-desc").val("动动小指头，就能掌握各种旅游资讯啦！");
   $('.infoGroup').text(korjo.typeName);
   var theUrl = 'period.html?c='+encodeURIComponent(korjo.country)+'&ci='+getParam("ci")+'&z='+encodeURIComponent(korjo.city)+'&zi='+korjo.cityId + '&currency=' + korjo.currency;
   $('#statue01').attr('href', theUrl);
@@ -246,7 +248,18 @@ $(function() {
   $(".infoContainer").addClass("loading");
   //看是否需要区分目的地，1区分，2不区分，
   korjo.checkIsMultipleAnswers(korjo.type, function(res) {
-    korjo.gatherquery(res);
+    if (!store.get('property')) {
+       korjo.getPros(function(response) {
+           for (var i = 0, max = response.length; i < max; i += 1) {
+               if (response[i].fullname.indexOf("通用") > -1 ) {
+                   store.set('property', response[i].id);
+               }
+           }
+           korjo.gatherquery(res);
+       });
+    } else {
+      korjo.gatherquery(res);
+    }
   })
   korjo.getStatue(korjo.statue);
   korjo.clickNav();
