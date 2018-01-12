@@ -15,7 +15,7 @@ korjo.getTitle = function() {
      query = 'typeid=' + korjo.type +'&propertyid='+store.get('property');
   }
   $.ajax({
-    url: 'http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID?' + query,
+    url: 'https://www.korjo.cn/KorjoApi/GetFQAListByTypeID?' + query,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
@@ -28,8 +28,9 @@ korjo.getTitle = function() {
         }
       });
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -57,7 +58,7 @@ korjo.getPeriod = function() {
 
 korjo.getAnswer = function(answerQuery) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetFQAAnswerListByDFQAID?" + answerQuery,
+    url: "https://www.korjo.cn/KorjoApi/GetFQAAnswerListByDFQAID?" + answerQuery,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
@@ -93,8 +94,9 @@ korjo.getAnswer = function(answerQuery) {
       $("#info_title").attr("href", url);
       korjo.getPeriod();
     },
-    error: function(error) {
-      console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -183,7 +185,7 @@ $(function() {
 	    var description = $("#info_title").text()+': '+$("#detailWrapper>h1").text();
 	    var detailTitle = encodeURIComponent($('#detailWrapper>h1').text());
       var link = encodeURIComponent(window.location);
-      var imgLink = encodeURIComponent('http://www.korjo.cn/images/logo_social.jpg');
+      var imgLink = encodeURIComponent('https://www.korjo.cn/images/logo_social.jpg');
 	    console.log(description);
        // 社交网络按钮
 	    //whatsapp
@@ -192,7 +194,7 @@ $(function() {
 		$("#wx-title").val('Korjo，带我去旅行');
 		$("#wx-desc").val(description);
 		$("#wx-link").val(location.href);
-		$("#wx-img").val('http://www.korjo.cn/images/logo_social.jpg');
+		$("#wx-img").val('https://www.korjo.cn/images/logo_social.jpg');
 	  	wechatShare();
 	  	//QQ
 	  	var qqlink = 'http://connect.qq.com/widget/shareqq/index.html?url='+link+'&desc='+detailTitle+'&title=Korjo，带我去旅行&summary='+detailTitle+'&pics='+imgLink+'&style=101&width=62&height=46';
@@ -214,6 +216,6 @@ $(function() {
 });
 
 //接口
-//http://korjo.fans-me.com/KorjoApi/GetFQAAnswerListByDFQAID?fqaid=3
-//http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=28
-//http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID?typeid=1&geographyid=目的地ID（可传可不传值）
+//https://www.korjo.cn/KorjoApi/GetFQAAnswerListByDFQAID?fqaid=3
+//https://www.korjo.cn/KorjoApi/GetTypeListByParentID?parentid=28
+//https://www.korjo.cn/KorjoApi/GetFQAListByTypeID?typeid=1&geographyid=目的地ID（可传可不传值）

@@ -11,15 +11,16 @@ korjo.slideShowTwo = function() {
 //旅游属性
 korjo.getPros = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetPropertyList?parentid=0",
+    url: "https://www.korjo.cn/KorjoApi/GetPropertyList?parentid=0",
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -74,7 +75,7 @@ korjo.getSwipers = function() {
 	// 	<img src="images/swiper01.jpg">
 	// </div>
 	$.ajax({
-		url: "https://korjo.fans-me.com/KorjoApi/GetPosterImageList",
+		url: "https://www.korjo.cn/KorjoApi/GetPosterImageList",
 		method: "GET",
 		dataType: "json",
 		success: function(result) {
@@ -85,23 +86,25 @@ korjo.getSwipers = function() {
 			$(".swiper-wrapper").html(html);
 			korjo.slideShowTwo();
 		},
-		error: function(error) {
-				console.log("an error occured: " + error);
-		}
+		error: function(obj, text, error) {
+            console.log("an error occured: " + text);
+            console.log("error: ", error);
+        }
  });
 }
 
 korjo.getRecommends = function(callback) {
     $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=0",
+    url: "https://www.korjo.cn/KorjoApi/GetCountryList?parentid=0",
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -131,4 +134,4 @@ $(function() {
       korjo.gatherTheCity();
 	}
 });
-//http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=0
+//https://www.korjo.cn/KorjoApi/GetCountryList?parentid=0

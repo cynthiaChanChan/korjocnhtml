@@ -36,15 +36,16 @@ korjo.currency = getParam("currency");
 
 korjo.getquery = function(parameters, callback) {
   $.ajax({
-    url: 'http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID' + parameters,
+    url: 'https://www.korjo.cn/KorjoApi/GetFQAListByTypeID' + parameters,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
      callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -52,10 +53,9 @@ korjo.getquery = function(parameters, callback) {
 //确定是否需要在列表页区分城市目的地，1区分 0不区分
 korjo.checkIsMultipleAnswers = function(id, callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/korjoApi/GetIsGeography?typeid=" + id + "&geographyid=" + korjo.cityId,
+    url: "https://www.korjo.cn/korjoApi/GetIsGeography?typeid=" + id + "&geographyid=" + korjo.cityId,
     method: "GET",
     dataType: "json",
-    jsonp: "data",
     success: function(result) {
       callback(result);
     },
@@ -68,15 +68,16 @@ korjo.checkIsMultipleAnswers = function(id, callback) {
 //旅游属性
 korjo.getPros = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetPropertyList?parentid=0",
+    url: "https://www.korjo.cn/KorjoApi/GetPropertyList?parentid=0",
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -84,10 +85,9 @@ korjo.getPros = function(callback) {
 
 korjo.getAnswer = function(answerQueryPrameters, callback) {
   $.ajax({
-    url: 'http://korjo.fans-me.com/KorjoApi/GetFQAAnswerListByDFQAID' + answerQueryPrameters,
+    url: 'https://www.korjo.cn/KorjoApi/GetFQAAnswerListByDFQAID' + answerQueryPrameters,
     method: "GET",
-    dataType: "jsonp",
-    jsonp: "data",
+    dataType: "json",
     success: function(result) {
       callback(result);
     },
@@ -189,17 +189,18 @@ korjo.currencyRate = function(callback) {
     callback(store.get("currencyData"));
   } else {
     $.ajax({
-      url: 'http://www.apilayer.net/api/live?access_key=0091e32d33806dddad20dd17b82ed35f',
+      url: korjo.GetAouthRequestApi + '?url=http://www.apilayer.net/api/live?access_key=0091e32d33806dddad20dd17b82ed35f',
       method: "GET",
-      dataType: "jsonp",
+      dataType: "json",
       success: function(result) {
         if (result.success) {
           callback(result);
           store.set("currencyData", result);
         }
       },
-      error: function(error) {
-        console.log("an error occured: " + error);
+      error: function(obj, text, error) {
+          console.log("an error occured: " + text);
+          console.log("error: ", error);
       }
     });
   }
@@ -304,7 +305,7 @@ $(function() {
 });
 
 //接口
-//http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID?typeid=1&geographyid=目的地ID（可传可不传值） &propertyid=属性ID
-//http://korjo.fans-me.com/KorjoApi/GetFQAListByTypeID?typeid=42&geographyid=17&propertyid=8
-//http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=28
-//http://korjo.fans-me.com/KorjoApi/GetFQAAnswerListByDFQAID?fqaid=15
+//https://www.korjo.cn/KorjoApi/GetFQAListByTypeID?typeid=1&geographyid=目的地ID（可传可不传值） &propertyid=属性ID
+//https://www.korjo.cn/KorjoApi/GetFQAListByTypeID?typeid=42&geographyid=17&propertyid=8
+//https://www.korjo.cn/KorjoApi/GetTypeListByParentID?parentid=28
+//https://www.korjo.cn/KorjoApi/GetFQAAnswerListByDFQAID?fqaid=15

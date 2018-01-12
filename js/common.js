@@ -1,5 +1,14 @@
-var korjo = {};
+//*后台接口有时是jsonp (), 有时是json
 
+//jsonp 数据有()是jsonp
+// dataType: "jsonp"
+// jsonp: "data"
+//json
+//dataType: "json"
+
+var korjo = {};
+//Http接口不能调用，重新定义封装调用
+korjo.GetAouthRequestApi = "https://www.korjo.cn/KorjoApi/GetAouthRequestApi";
 /// 根据屏幕宽度计算rem
 function auto_rem(){
     var remScale;
@@ -36,14 +45,14 @@ function auto_rem(){
 // 相对地址转换为绝对地址
 function imgUrl(url) {
     if (url.indexOf('http') != 0) {
-        return 'http://korjo.fans-me.com' + url;
+        return 'https://www.korjo.cn' + url;
     }
     return url;
 }
 
 function imgTagUrl(str) {
     // console.log(str);
-    return str.replace(/<img.*?src="\//gi, '<img src="http://korjo.fans-me.com/').replace(/<li><p>(.*?)<\/p><\/li>/gi, '<li>$1<\/li>').replace(/<video.*?src="\//gi, '<video controls src="http://korjo.fans-me.com/').replace(/<source.*?<\/video>/, "</video>");    
+    return str.replace(/<img.*?src="\//gi, '<img src="https://www.korjo.cn/').replace(/<li><p>(.*?)<\/p><\/li>/gi, '<li>$1<\/li>').replace(/<video.*?src="\//gi, '<video controls src="https://www.korjo.cn/').replace(/<source.*?<\/video>/, "</video>");    
 }
 
 // 判断是否微信

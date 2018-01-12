@@ -44,15 +44,16 @@ korjo.getFirstClass = function() {
 
 korjo.getParent = function(parentid, callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?&parentid=" + parentid,
+    url: "https://www.korjo.cn/KorjoApi/GetTypeListByParentID?&parentid=" + parentid,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -74,15 +75,16 @@ korjo.gatherParent = function() {
 
 korjo.getClasses = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=" + korjo.type,
+    url: "https://www.korjo.cn/KorjoApi/GetTypeListByParentID?parentid=" + korjo.type,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -137,5 +139,5 @@ $(function() {
 });
 
 //接口
-//http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=
-//http://korjo.fans-me.com/KorjoApi/GetTypeListByTravelStatus?travel_status=2&parentid=0
+//https://www.korjo.cn/KorjoApi/GetTypeListByParentID?parentid=
+//https://www.korjo.cn/KorjoApi/GetTypeListByTravelStatus?travel_status=2&parentid=0

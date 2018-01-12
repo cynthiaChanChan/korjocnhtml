@@ -5,21 +5,21 @@ $(function() {
 
 korjo.getIP = function(callback) {
 	$.ajax({
-    url: "http://api.map.baidu.com/location/ip?ip=&ak=54HTqRT5AzWhub69FfOhGUrVaPiXX8qL&coor=bd09ll",
+    url: "https://api.map.baidu.com/location/ip?ip=&ak=54HTqRT5AzWhub69FfOhGUrVaPiXX8qL&coor=bd09ll",
     method: "GET",
     dataType: "jsonp",
     success: function(result) {
       callback(result);
     },
     error: function(error) {
-        console.log("an error occured: " + error);
+        console.log("an error occured: " + JSON.stringify(error));
     }
   });
 };
 
 korjo.getChinaCities = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetChinaCityList",
+    url: "https://www.korjo.cn/KorjoApi/GetChinaCityList",
     method: "GET",
     dataType: "json",
     success: function(result) {
@@ -44,15 +44,16 @@ korjo.getChinaCities = function(callback) {
 
 korjo.getPros = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetPropertyList?parentid=0",
+    url: "https://www.korjo.cn/KorjoApi/GetPropertyList?parentid=0",
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -60,14 +61,14 @@ korjo.getPros = function(callback) {
 
 korjo.getCountries = function(callback) {
   $.ajax({
-    url: "https://korjo.fans-me.com/KorjoApi/GetContinentTree",
+    url: "https://www.korjo.cn/KorjoApi/GetContinentTree",
     method: "GET",
     dataType: "json",
     success: function(result) {
       callback(result);
     },
     error: function(error) {
-        console.log("an error occured: " + error);
+        console.log("an error occured: " + JSON.stringify(error));
     }
   });
 };
@@ -255,6 +256,6 @@ function initEvent() {
 }
 
 //接口
-//http://korjo.fans-me.com/KorjoApi/GetPropertyList?parentid=0
-//http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=0
-//http://korjo.fans-me.com/KorjoApi/GetChinaCityList
+//https://www.korjo.cn/KorjoApi/GetPropertyList?parentid=0
+//https://www.korjo.cn/KorjoApi/GetCountryList?parentid=0
+//https://www.korjo.cn/KorjoApi/GetChinaCityList

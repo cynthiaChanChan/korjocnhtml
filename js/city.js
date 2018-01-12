@@ -2,9 +2,10 @@ korjo.country = getParam('c');
 korjo.countryId = getParam('ci');
 korjo.statue = getParam('p');
 korjo.currency = getParam('currency');
+
 korjo.getCities = function(callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=" + korjo.countryId ,
+    url: "https://www.korjo.cn/KorjoApi/GetCountryList?parentid=" + korjo.countryId ,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
@@ -65,4 +66,4 @@ $(function() {
 });
 
 //接口
-//http://korjo.fans-me.com/KorjoApi/GetCountryList?parentid=5
+//https://www.korjo.cn/KorjoApi/GetCountryList?parentid=5

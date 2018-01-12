@@ -137,15 +137,16 @@ korjo.popHint = function() {
 
 korjo.getType = function(status, callback) {
   $.ajax({
-    url: "http://korjo.fans-me.com/KorjoApi/GetTypeListByTravelStatus?parentid=0&travel_status=" + status,
+    url: "https://www.korjo.cn/KorjoApi/GetTypeListByTravelStatus?parentid=0&travel_status=" + status,
     method: "GET",
     dataType: "jsonp",
     jsonp: "data",
     success: function(result) {
       callback(result);
     },
-    error: function(error) {
-        console.log("an error occured: " + error);
+    error: function(obj, text, error) {
+        console.log("an error occured: " + text);
+        console.log("error: ", error);
     }
   });
 };
@@ -248,5 +249,5 @@ $(function() {
 });
 
 // 接口
-// http://korjo.fans-me.com/KorjoApi/GetTypeListByTravelStatus?travel_status=2&parentid=0
-//http://korjo.fans-me.com/KorjoApi/GetTypeListByParentID?parentid=28
+// https://www.korjo.cn/KorjoApi/GetTypeListByTravelStatus?travel_status=2&parentid=0
+//https://www.korjo.cn/KorjoApi/GetTypeListByParentID?parentid=28
