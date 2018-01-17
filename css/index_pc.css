@@ -21,6 +21,6 @@ body * { user-select: none; -webkit-user-select: none }
 
 /*分享*/
 #code { position: absolute; left: 400px; bottom: 20px; }
-#code h2 {font-size: 13px; margin: 10px 0; text-align: center;}
+#code h2 {font-size: 13px; margin: 10px 0; text-align: center; color: #fff;}
 #code #codeImg { display: block; margin-bottom: 10px; padding: 10px;}
 #codeImg img {display: block; width: 160px; height: auto;}
